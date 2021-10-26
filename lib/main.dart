@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttergram/helpers/navigator.dart';
 import 'package:fluttergram/locator.dart';
 import 'package:fluttergram/routes/router.dart';
+import 'package:fluttergram/ui_shared/theme.dart';
 
 void main() {
   setupLocator();
@@ -14,9 +15,7 @@ class MyApp extends StatelessWidget {
     final NavigatorService navigator = locator<NavigatorService>();
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: theme(),
       navigatorKey: navigator.navigatorKey,
       initialRoute: UIRouter.initialRoute,
       onGenerateRoute: UIRouter.generateRoute,
