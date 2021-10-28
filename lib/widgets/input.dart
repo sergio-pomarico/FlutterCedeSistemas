@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttergram/ui_shared/constanst.dart';
 import 'package:fluttergram/ui_shared/size_config.dart';
 
@@ -9,15 +10,17 @@ class Input extends StatefulWidget {
       this.placeholder = '',
       this.error,
       this.icon,
-      this.enable = true,
+      this.enabled = true,
       this.autocorrect = false,
       this.autofocus = false,
-      this.enableAutoSuggestions = false,
+      this.enableSuggestions = false,
       this.isPassword = false,
       this.keyboardType = TextInputType.text,
       required this.onChange,
+      this.node,
       this.sufix,
       this.multiline = false,
+      this.inputFormatters,
       Key? key})
       : super(key: key);
 
@@ -27,19 +30,37 @@ class Input extends StatefulWidget {
   final String placeholder;
   final IconData? icon;
   final Widget? sufix;
-  final bool enable;
+  final bool enabled;
   final bool autocorrect;
   final bool autofocus;
-  final bool enableAutoSuggestions;
+  final bool enableSuggestions;
   final bool multiline;
   final void Function(String) onChange;
   final TextInputType keyboardType;
   final bool isPassword;
+  final FocusNode? node;
+  final List<TextInputFormatter>? inputFormatters;
 
   _InputState createState() => _InputState();
 }
 
 class _InputState extends State<Input> {
+  FocusNode? focusNode;
+
+  @override
+  void dispose() {
+    if (widget.node == null) {
+      focusNode?.dispose();
+    }
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    focusNode = widget.node ?? FocusNode();
+  }
+
   InputDecoration getDecorator() => InputDecoration(
         labelText: widget.label,
         labelStyle: TextStyle(
@@ -62,13 +83,17 @@ class _InputState extends State<Input> {
     return TextFormField(
       // TODO: Input formaters agregar logica
       //inputFormatters: [],
+      keyboardType: widget.keyboardType,
+      focusNode: focusNode,
       controller: widget.controller,
-      enabled: widget.enable,
+      enabled: widget.enabled,
       autocorrect: widget.autocorrect,
-      enableSuggestions: widget.enableAutoSuggestions,
-      decoration: getDecorator(),
-      onChanged: widget.onChange,
+      autofocus: widget.autofocus,
       obscureText: widget.isPassword,
+      enableSuggestions: widget.enableSuggestions,
+      decoration: getDecorator(),
+      maxLines: widget.multiline ? 5 : 1,
+      onChanged: widget.onChange,
     );
   }
 }
