@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:fluttergram/helpers/navigator.dart';
+import 'package:fluttergram/locator.dart';
 import 'package:fluttergram/ui_shared/constanst.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:fluttergram/ui_shared/size_config.dart';
-//import 'package:fluttergram/ui_shared/image.dart';
+import 'package:fluttergram/ui_shared/image.dart';
+import 'package:fluttergram/widgets/button.dart';
 
 List<Map<String, String>> sliderData = <Map<String, String>>[
   {
@@ -29,6 +31,12 @@ class WalkthroughView extends StatefulWidget {
 class _WalkthroughViewState extends State<WalkthroughView> {
   int pageIndex = 0;
 
+  final NavigatorService navigator = locator<NavigatorService>();
+
+  void goToLogin() {
+    //navigator.push(route: route);
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -46,7 +54,9 @@ class _WalkthroughViewState extends State<WalkthroughView> {
                 },
                 itemBuilder: (context, index) => Column(
                   children: <Widget>[
-                    Spacer(),
+                    SizedBox(
+                      height: getProportionsScreenHeigth(64),
+                    ),
                     Text(
                       'FLUTTERGRAM',
                       textAlign: TextAlign.center,
@@ -69,16 +79,15 @@ class _WalkthroughViewState extends State<WalkthroughView> {
                     SizedBox(
                       height: getProportionsScreenHeigth(16),
                     ),
-                    // SvgPicture.asset(
-                    //   sliderData[index]['image'] as String,
-                    //   width: getProportionsScreenWidth(320),
-                    //   height: getProportionsScreenHeigth(240),
-                    //   fit: BoxFit.cover,
-                    // ),
+                    ImageFactory.fromAssets(
+                      asset: sliderData[index]['image'] as String,
+                      width: getProportionsScreenWidth(320),
+                      height: getProportionsScreenHeigth(240),
+                    ),
                   ],
                 ),
               ),
-              flex: 3,
+              flex: 2,
             ),
             Expanded(
               child: Padding(
@@ -88,14 +97,22 @@ class _WalkthroughViewState extends State<WalkthroughView> {
                 child: Column(
                   children: <Widget>[
                     ///Indicadores
-                    Spacer(),
+                    SizedBox(
+                      height: getProportionsScreenHeigth(16),
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: List.generate(
                         sliderData.length,
                         (index) => buildDot(index),
                       ),
-                    )
+                    ),
+                    Spacer(),
+                    Button(
+                      label: 'Next',
+                      onPress: goToLogin,
+                    ),
+                    Spacer(),
                   ],
                 ),
               ),
