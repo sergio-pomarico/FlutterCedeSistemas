@@ -10,6 +10,7 @@ ThemeData theme() {
     visualDensity: VisualDensity.adaptivePlatformDensity,
     appBarTheme: appBarTheme(),
     textTheme: textTheme(),
+    inputDecorationTheme: inputDecorationTheme(),
   );
 }
 
@@ -30,5 +31,33 @@ TextTheme textTheme() {
   return TextTheme(
     bodyText1: TextStyle(color: textColor),
     bodyText2: TextStyle(color: textColor),
+  );
+}
+
+InputDecorationTheme inputDecorationTheme() {
+  OutlineInputBorder outlineInputBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(28),
+    gapPadding: 10,
+    borderSide: BorderSide(color: textColor, width: 2.0),
+  );
+
+  OutlineInputBorder outlineErrorInputBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(28),
+    gapPadding: 10,
+    borderSide: BorderSide(color: Colors.red[200]!, width: 2.0),
+  );
+
+  OutlineInputBorder outlineDisableInputBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(28),
+    gapPadding: 10,
+    borderSide: BorderSide(color: Colors.grey[400]!, width: 2.0),
+  );
+
+  return InputDecorationTheme(
+    enabledBorder: outlineInputBorder,
+    focusedBorder: outlineInputBorder,
+    errorBorder: outlineErrorInputBorder,
+    disabledBorder: outlineDisableInputBorder,
+    border: outlineInputBorder,
   );
 }
