@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:fluttergram/ui_shared/constanst.dart';
-import 'package:fluttergram/ui_shared/size_config.dart';
-import 'package:fluttergram/widgets/button.dart';
-import 'package:fluttergram/widgets/input.dart';
-import 'package:fluttergram/widgets/social_button.dart';
+part of app.auth;
 
 class SignUpView extends StatefulWidget {
   static String route = 'signup';

@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:fluttergram/screens/auth/sign_up_view.dart';
-import 'package:fluttergram/screens/auth/login_view.dart';
+import 'package:fluttergram/screens/auth/auth_view.dart';
 import 'package:fluttergram/screens/walkthrough/walkthrough_view.dart';
 
 class UIRouter {
-  static String initialRoute = SignUpView.route;
+  static String initialRoute = AuthView.route;
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     Map<String, Route<dynamic>> appRouting = <String, Route<dynamic>>{
-      SignUpView.route: MaterialPageRoute<dynamic>(
+      AuthView.route: MaterialPageRoute<dynamic>(
         settings: RouteSettings(name: settings.name),
-        builder: (_) => SignUpView(),
-      ),
-      LoginView.route: MaterialPageRoute<dynamic>(
-        settings: RouteSettings(name: settings.name),
-        builder: (_) => LoginView(),
+        builder: (_) => AuthView(),
       ),
       WalkthroughView.route: MaterialPageRoute<dynamic>(
         settings: RouteSettings(name: settings.name),
