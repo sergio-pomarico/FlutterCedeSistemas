@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttergram/helpers/navigator.dart';
 import 'package:fluttergram/locator.dart';
-import 'package:fluttergram/screens/login.dart';
 import 'package:fluttergram/ui_shared/size_config.dart';
 
 class HomePage extends StatefulWidget {
@@ -33,9 +32,7 @@ class _HomePagePageState extends State<HomePage> {
               ),
             ),
             ElevatedButton(
-              onPressed: () {
-                navigator.push(route: LoginPage.route);
-              },
+              onPressed: () {},
               child: Text('Ir a Login'),
             )
           ],

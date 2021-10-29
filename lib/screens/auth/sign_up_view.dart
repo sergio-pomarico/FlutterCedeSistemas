@@ -5,13 +5,13 @@ import 'package:fluttergram/widgets/button.dart';
 import 'package:fluttergram/widgets/input.dart';
 import 'package:fluttergram/widgets/social_button.dart';
 
-class LoginView extends StatefulWidget {
-  static String route = 'login';
+class SignUpView extends StatefulWidget {
+  static String route = 'signup';
 
-  _LoginViewState createState() => _LoginViewState();
+  _SignUpViewState createState() => _SignUpViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _SignUpViewState extends State<SignUpView> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -31,7 +31,7 @@ class _LoginViewState extends State<LoginView> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Login',
+          'Register',
           style: TextStyle(
               fontSize: getProportionsScreenHeigth(14), color: secondaryColor),
         ),
@@ -48,7 +48,7 @@ class _LoginViewState extends State<LoginView> {
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               Text(
-                'Welcome Back',
+                'Register Account',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
@@ -57,7 +57,7 @@ class _LoginViewState extends State<LoginView> {
                 ),
               ),
               Text(
-                'Sign in with your email and password  \nor continue with social media',
+                'Complete your details or continue\nwith social media',
                 textAlign: TextAlign.center,
               ),
               SizedBox(
@@ -87,31 +87,14 @@ class _LoginViewState extends State<LoginView> {
               SizedBox(
                 height: getProportionsScreenHeigth(24),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Row(
-                    children: [
-                      Checkbox(
-                        value: true,
-                        onChanged: (_) {},
-                        activeColor: primaryColor,
-                      ),
-                      Text('Remember me'),
-                    ],
-                  ),
-                  InkWell(
-                    onTap: () {
-                      print('tap on link');
-                    },
-                    child: Text(
-                      'Forgot Password',
-                      style: TextStyle(
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
-                  )
-                ],
+              Input(
+                label: 'confirm password',
+                icon: Icons.lock_outlined,
+                controller: passwordController,
+                placeholder: 'repeat your password',
+                error: passwordError,
+                onChange: onValidatePass,
+                isPassword: true,
               ),
               SizedBox(
                 height: getProportionsScreenHeigth(24),
@@ -154,22 +137,9 @@ class _LoginViewState extends State<LoginView> {
               SizedBox(
                 height: getProportionsScreenHeigth(24),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    "Don't have an account? ",
-                  ),
-                  InkWell(
-                    onTap: () {
-                      print('tap on link');
-                    },
-                    child: Text(
-                      'Sign Up',
-                      style: TextStyle(color: primaryColor),
-                    ),
-                  )
-                ],
+              Text(
+                'By continuing your confirm that you agree \nwith our Term and Condition',
+                textAlign: TextAlign.center,
               ),
             ],
           ),
