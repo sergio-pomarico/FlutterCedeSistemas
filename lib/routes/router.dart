@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fluttergram/screens/auth/sign_up_view.dart';
-import 'package:fluttergram/screens/home.dart';
 import 'package:fluttergram/screens/auth/login_view.dart';
 import 'package:fluttergram/screens/walkthrough/walkthrough_view.dart';
 
@@ -9,10 +8,6 @@ class UIRouter {
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     Map<String, Route<dynamic>> appRouting = <String, Route<dynamic>>{
-      HomePage.route: MaterialPageRoute<dynamic>(
-        settings: RouteSettings(name: settings.name),
-        builder: (_) => HomePage(),
-      ),
       SignUpView.route: MaterialPageRoute<dynamic>(
         settings: RouteSettings(name: settings.name),
         builder: (_) => SignUpView(),
