@@ -11,13 +11,43 @@ class _LoginViewState extends State<LoginView> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  AuthRepository? repository;
+
   String? passwordError;
+  String? emailError;
+
+  @override
+  initState() {
+    repository = AuthRepository();
+    super.initState();
+  }
+
+  bool get disableButton =>
+      emailController.text.isEmpty || passwordController.text.isEmpty;
+
+  Future<void> login() async {
+    User? user = await repository?.login(
+        email: emailController.text, password: passwordController.text);
+    if (user != null) {
+      //TODO add redirect
+      debugPrint('Login Success');
+    }
+  }
 
   void onValidatePass(String value) {
     setState(() {
       value.length >= 6
           ? passwordError = null
           : passwordError = 'password is too short';
+    });
+  }
+
+  void onValidateEmail(String email) {
+    RegExp regex = RegExp(
+        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+    bool isValid = regex.hasMatch(email.trim());
+    setState(() {
+      isValid ? emailError = null : emailError = 'invalid email';
     });
   }
 
@@ -68,9 +98,8 @@ class _LoginViewState extends State<LoginView> {
                 icon: Icons.email_outlined,
                 controller: emailController,
                 placeholder: 'add your email',
-                onChange: (value) {
-                  print(value);
-                },
+                onChange: onValidateEmail,
+                error: emailError,
               ),
               SizedBox(
                 height: getProportionsScreenHeigth(24),
@@ -118,10 +147,8 @@ class _LoginViewState extends State<LoginView> {
               ),
               Button(
                 label: 'Sing In',
-                onPress: () {
-                  print('email ${emailController.text}');
-                  print('password ${passwordController.text}');
-                },
+                onPress: login,
+                disable: disableButton,
               ),
               SizedBox(
                 height: getProportionsScreenHeigth(24),
