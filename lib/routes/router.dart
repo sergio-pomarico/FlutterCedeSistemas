@@ -3,7 +3,7 @@ import 'package:fluttergram/screens/auth/auth_view.dart';
 import 'package:fluttergram/screens/walkthrough/walkthrough_view.dart';
 
 class UIRouter {
-  static String initialRoute = AuthView.route;
+  static String initialRoute = WalkthroughView.route;
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     Map<String, Route<dynamic>> appRouting = <String, Route<dynamic>>{

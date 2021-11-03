@@ -1,12 +1,13 @@
 part of app.auth;
 
 class SignUpView extends StatefulWidget {
-  static String route = 'signup';
+  static String route = '${AuthView.route}/signup';
 
   _SignUpViewState createState() => _SignUpViewState();
 }
 
 class _SignUpViewState extends State<SignUpView> {
+  AuthRepository? repository;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -18,6 +19,12 @@ class _SignUpViewState extends State<SignUpView> {
           ? passwordError = null
           : passwordError = 'password is too short';
     });
+  }
+
+  @override
+  void initState() {
+    repository = AuthRepository();
+    super.initState();
   }
 
   @override
@@ -63,9 +70,7 @@ class _SignUpViewState extends State<SignUpView> {
                 icon: Icons.email_outlined,
                 controller: emailController,
                 placeholder: 'add your email',
-                onChange: (value) {
-                  print(value);
-                },
+                onChange: (value) {},
               ),
               SizedBox(
                 height: getProportionsScreenHeigth(24),
@@ -96,9 +101,12 @@ class _SignUpViewState extends State<SignUpView> {
               ),
               Button(
                 label: 'Sing In',
-                onPress: () {
-                  print('email ${emailController.text}');
-                  print('password ${passwordController.text}');
+                onPress: () async {
+                  await repository?.register(
+                      email: emailController.text,
+                      password: passwordController.text);
+                  // print('email ${emailController.text}');
+                  // print('password ${passwordController.text}');
                 },
               ),
               SizedBox(

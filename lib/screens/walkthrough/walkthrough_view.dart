@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttergram/helpers/navigator.dart';
 import 'package:fluttergram/locator.dart';
+import 'package:fluttergram/screens/auth/auth_view.dart';
 import 'package:fluttergram/ui_shared/constanst.dart';
 
 import 'package:fluttergram/ui_shared/size_config.dart';
@@ -34,7 +35,7 @@ class _WalkthroughViewState extends State<WalkthroughView> {
   final NavigatorService navigator = locator<NavigatorService>();
 
   void goToLogin() {
-    //navigator.push(route: route);
+    navigator.push(route: AuthView.route);
   }
 
   @override

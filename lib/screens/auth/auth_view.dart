@@ -10,6 +10,8 @@ import 'package:fluttergram/widgets/button.dart';
 import 'package:fluttergram/widgets/input.dart';
 import 'package:fluttergram/widgets/social_button.dart';
 
+import 'package:fluttergram/repository/auth_repository.dart';
+
 part 'login_view.dart';
 part 'sign_up_view.dart';
 
@@ -27,7 +29,7 @@ class AuthView extends StatelessWidget {
   }
 }
 
-Route<dynamic> autheticationRouteStack(RouteSettings settings) {
+Route<dynamic>? autheticationRouteStack(RouteSettings settings) {
   Map<String, Route<dynamic>> appRouting = <String, Route<dynamic>>{
     SignUpView.route: MaterialPageRoute<dynamic>(
       settings: RouteSettings(name: settings.name),
@@ -38,6 +40,5 @@ Route<dynamic> autheticationRouteStack(RouteSettings settings) {
       builder: (_) => LoginView(),
     ),
   };
-
-  return appRouting[settings.name]!;
+  return appRouting[settings.name];
 }

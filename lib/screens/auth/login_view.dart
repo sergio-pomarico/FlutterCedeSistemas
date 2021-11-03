@@ -1,12 +1,13 @@
 part of app.auth;
 
 class LoginView extends StatefulWidget {
-  static String route = 'login';
+  static String route = '${AuthView.route}/login';
 
   _LoginViewState createState() => _LoginViewState();
 }
 
 class _LoginViewState extends State<LoginView> {
+  final NavigatorService navigator = locator<NavigatorService>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -18,6 +19,10 @@ class _LoginViewState extends State<LoginView> {
           ? passwordError = null
           : passwordError = 'password is too short';
     });
+  }
+
+  void navigateToSignUp() {
+    navigator.push(route: SignUpView.route, key: navigator.authNavigatorKey);
   }
 
   @override
@@ -156,9 +161,7 @@ class _LoginViewState extends State<LoginView> {
                     "Don't have an account? ",
                   ),
                   InkWell(
-                    onTap: () {
-                      print('tap on link');
-                    },
+                    onTap: navigateToSignUp,
                     child: Text(
                       'Sign Up',
                       style: TextStyle(color: primaryColor),
