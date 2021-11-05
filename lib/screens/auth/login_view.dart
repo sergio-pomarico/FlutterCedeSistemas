@@ -8,29 +8,21 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   final NavigatorService navigator = locator<NavigatorService>();
+  final AuthRepository repository = locator<AuthRepository>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  AuthRepository? repository;
-
   String? passwordError;
   String? emailError;
-
-  @override
-  initState() {
-    repository = AuthRepository();
-    super.initState();
-  }
 
   bool get disableButton =>
       emailController.text.isEmpty || passwordController.text.isEmpty;
 
   Future<void> login() async {
-    User? user = await repository?.login(
+    User? user = await repository.login(
         email: emailController.text, password: passwordController.text);
     if (user != null) {
-      //TODO add redirect
-      debugPrint('Login Success');
+      navigator.replace(route: HomeView.route);
     }
   }
 

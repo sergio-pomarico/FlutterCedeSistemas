@@ -7,11 +7,15 @@ class SignUpView extends StatefulWidget {
 }
 
 class _SignUpViewState extends State<SignUpView> {
-  AuthRepository? repository;
+  final AuthRepository repository = locator<AuthRepository>();
+  final NavigatorService navigator = locator<NavigatorService>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
 
+  String? emailError;
   String? passwordError;
+  String? confirmPasswordError;
 
   void onValidatePass(String value) {
     setState(() {
@@ -21,10 +25,33 @@ class _SignUpViewState extends State<SignUpView> {
     });
   }
 
-  @override
-  void initState() {
-    repository = AuthRepository();
-    super.initState();
+  void onValidateConfirmPass(String value) {
+    bool isEqualPasswords =
+        passwordController.text == confirmPasswordController.text;
+    setState(() {
+      value.length >= 6 && isEqualPasswords
+          ? confirmPasswordError = null
+          : confirmPasswordError = 'the password not are equal';
+    });
+  }
+
+  void onValidateEmail(String email) {
+    RegExp regex = RegExp(
+        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+    bool isValid = regex.hasMatch(email.trim());
+    setState(() {
+      isValid ? emailError = null : emailError = 'invalid email';
+    });
+  }
+
+  Future<void> register() async {
+    User? user = await repository.register(
+      email: emailController.text,
+      password: passwordController.text,
+    );
+    if (user != null) {
+      navigator.replace(route: HomeView.route);
+    }
   }
 
   @override
@@ -70,7 +97,8 @@ class _SignUpViewState extends State<SignUpView> {
                 icon: Icons.email_outlined,
                 controller: emailController,
                 placeholder: 'add your email',
-                onChange: (value) {},
+                onChange: onValidateEmail,
+                error: emailError,
               ),
               SizedBox(
                 height: getProportionsScreenHeigth(24),
@@ -90,25 +118,16 @@ class _SignUpViewState extends State<SignUpView> {
               Input(
                 label: 'confirm password',
                 icon: Icons.lock_outlined,
-                controller: passwordController,
+                controller: confirmPasswordController,
                 placeholder: 'repeat your password',
-                error: passwordError,
-                onChange: onValidatePass,
+                error: confirmPasswordError,
+                onChange: onValidateConfirmPass,
                 isPassword: true,
               ),
               SizedBox(
                 height: getProportionsScreenHeigth(24),
               ),
-              Button(
-                label: 'Sing In',
-                onPress: () async {
-                  await repository?.register(
-                      email: emailController.text,
-                      password: passwordController.text);
-                  // print('email ${emailController.text}');
-                  // print('password ${passwordController.text}');
-                },
-              ),
+              Button(label: 'Sing In', onPress: register),
               SizedBox(
                 height: getProportionsScreenHeigth(24),
               ),

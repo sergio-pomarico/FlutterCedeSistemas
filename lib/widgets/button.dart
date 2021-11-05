@@ -18,7 +18,6 @@ class Button extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-        print(constraints.maxWidth);
         return SizedBox(
           height: getProportionsScreenHeigth(60),
           width: constraints.maxWidth,

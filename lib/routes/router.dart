@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttergram/screens/auth/auth_view.dart';
+import 'package:fluttergram/screens/home/home_view.dart';
 import 'package:fluttergram/screens/walkthrough/walkthrough_view.dart';
 
 class UIRouter {
@@ -14,6 +15,10 @@ class UIRouter {
       WalkthroughView.route: MaterialPageRoute<dynamic>(
         settings: RouteSettings(name: settings.name),
         builder: (_) => WalkthroughView(),
+      ),
+      HomeView.route: MaterialPageRoute<dynamic>(
+        settings: RouteSettings(name: settings.name),
+        builder: (_) => HomeView(),
       )
     };
 
