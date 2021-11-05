@@ -28,12 +28,14 @@ class ImageFactory {
     required double height,
     required double width,
     fit = BoxFit.contain,
+    Color? color,
   }) {
     return SvgPicture.asset(
       name,
       width: width,
       height: height,
       fit: fit,
+      color: color,
     );
   }
 }

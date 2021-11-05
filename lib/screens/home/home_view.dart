@@ -3,6 +3,9 @@ library app.home;
 import 'package:flutter/material.dart';
 import 'package:fluttergram/helpers/navigator.dart';
 import 'package:fluttergram/locator.dart';
+import 'package:fluttergram/ui_shared/constanst.dart';
+import 'package:fluttergram/ui_shared/size_config.dart';
+import 'package:fluttergram/widgets/bottom_navbar.dart';
 
 part './timeline_view.dart';
 part './profile_view.dart';
