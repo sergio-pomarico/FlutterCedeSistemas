@@ -93,10 +93,13 @@ class BottomNavbar extends StatelessWidget {
                 onPressed: () {
                   navigateTo(ProfileView.route);
                 },
-                icon: ImageFactory.fromAssets(
-                  asset: 'assets/icons/user.svg',
+                icon: ImageFactory.svg(
+                  'assets/icons/user.svg',
                   height: getProportionsScreenHeigth(32),
                   width: getProportionsScreenWidth(32),
+                  color: currentPage == MenuPage.profile
+                      ? Colors.blue
+                      : disablePrimaryColor,
                 ),
               ),
             ],
