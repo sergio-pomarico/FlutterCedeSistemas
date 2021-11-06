@@ -60,6 +60,9 @@ class AuthRepository {
         case ErrorCodes.ERROR_USER_NOT_FOUND:
           error = ErrorMessages.ERROR_USER_NOT_FOUND;
           break;
+        case ErrorCodes.ERROR_CODE_WRONG_PASSWORD:
+          error = ErrorMessages.ERROR_CODE_WRONG_PASSWORD;
+          break;
         case ErrorCodes.ERROR_INVALID_EMAIL:
           error = ErrorMessages.ERROR_INVALID_EMAIL;
           break;

@@ -48,7 +48,7 @@ class BottomNavbar extends StatelessWidget {
                   height: getProportionsScreenHeigth(32),
                   width: getProportionsScreenWidth(32),
                   color: currentPage == MenuPage.home
-                      ? Colors.blue
+                      ? primaryColor
                       : disablePrimaryColor,
                 ),
               ),
@@ -98,7 +98,7 @@ class BottomNavbar extends StatelessWidget {
                   height: getProportionsScreenHeigth(32),
                   width: getProportionsScreenWidth(32),
                   color: currentPage == MenuPage.profile
-                      ? Colors.blue
+                      ? primaryColor
                       : disablePrimaryColor,
                 ),
               ),
