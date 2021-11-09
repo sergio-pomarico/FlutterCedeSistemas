@@ -10,15 +10,27 @@ class _CreatePostViewState extends State<CreatePostView> {
   TextEditingController content = TextEditingController();
   String? contentError;
 
+  XFile? image;
+
+  final ImagePicker picker = ImagePicker();
+
   void validateContent(String _) {
     setState(() {
       contentError = content.text.isEmpty ? 'the content is required' : null;
     });
   }
 
-  void launchCamera() async {}
+  void launchCamera(BuildContext context) async {
+    image = await picker.pickImage(source: ImageSource.camera);
+    Navigator.pop(context);
+    setState(() {});
+  }
 
-  void launchGallery() async {}
+  void launchGallery(BuildContext context) async {
+    image = await picker.pickImage(source: ImageSource.gallery);
+    Navigator.pop(context);
+    setState(() {});
+  }
 
   void onPressLoadPhoto(BuildContext context) {
     showModalBottomSheet(
@@ -46,7 +58,7 @@ class _CreatePostViewState extends State<CreatePostView> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 TextButton(
-                  onPressed: launchCamera,
+                  onPressed: () => launchCamera(context),
                   child: Row(
                     children: [
                       Icon(
@@ -64,7 +76,7 @@ class _CreatePostViewState extends State<CreatePostView> {
                   ),
                 ),
                 TextButton(
-                  onPressed: launchGallery,
+                  onPressed: () => launchCamera(context),
                   child: Row(
                     children: [
                       Icon(
@@ -92,6 +104,7 @@ class _CreatePostViewState extends State<CreatePostView> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+    print(image);
     return Scaffold(
       key: Key('create_post_view'),
       appBar: AppBar(
@@ -113,20 +126,33 @@ class _CreatePostViewState extends State<CreatePostView> {
             children: <Widget>[
               InkWell(
                 onTap: () => onPressLoadPhoto(context),
-                child: SizedBox(
-                  height: 320,
-                  width: SizeConfig.screenWidth,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: lightGrey,
-                    ),
-                    child: Icon(
-                      Icons.photo_rounded,
-                      color: textColor,
-                      size: 48,
-                    ),
-                  ),
-                ),
+                child: image == null
+                    ? SizedBox(
+                        height: 320,
+                        width: SizeConfig.screenWidth,
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: lightGrey,
+                          ),
+                          child: Icon(
+                            Icons.photo_rounded,
+                            color: textColor,
+                            size: 48,
+                          ),
+                        ),
+                      )
+                    : SizedBox(
+                        height: 320,
+                        width: SizeConfig.screenWidth,
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: lightGrey,
+                          ),
+                          child: Image.file(
+                            File(image?.path ?? ''),
+                          ),
+                        ),
+                      ),
               ),
               SizedBox(height: SizeConfig.screenHeight! * 0.05),
               Input(
@@ -136,7 +162,14 @@ class _CreatePostViewState extends State<CreatePostView> {
                 placeholder: 'what are you thinking ?',
                 onChange: validateContent,
                 error: contentError,
-              )
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              Button(
+                label: 'Publish',
+                onPress: () {},
+              ),
             ],
           ),
         ),
