@@ -6,7 +6,7 @@ import 'package:fluttergram/ui_shared/constanst.dart';
 import 'package:fluttergram/ui_shared/image.dart';
 import 'package:fluttergram/ui_shared/size_config.dart';
 
-enum MenuPage { home, favourites, messages, profile }
+enum MenuPage { home, favourites, messages, profile, none }
 
 class BottomNavbar extends StatelessWidget {
   BottomNavbar({required this.currentPage, Key? key}) : super(key: key);
@@ -66,7 +66,9 @@ class BottomNavbar extends StatelessWidget {
                 ),
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  navigateTo(CreatePostView.route);
+                },
                 child: SizedBox(
                   height: getProportionsScreenHeigth(48),
                   width: getProportionsScreenWidth(48),
