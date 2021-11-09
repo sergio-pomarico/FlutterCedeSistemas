@@ -1,7 +1,6 @@
-// ignore_for_file: import_of_legacy_library_into_null_safe, deprecated_member_use
-
 library bloc.auth;
 
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

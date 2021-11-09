@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'dart:io' show Platform;
 
 import 'package:fluttergram/ui_shared/constanst.dart';
@@ -18,11 +19,11 @@ AppBarTheme appBarTheme() {
   return AppBarTheme(
     color: Colors.white,
     elevation: 0,
-    // brightness: Brightness.light,
+    systemOverlayStyle: SystemUiOverlayStyle.light,
     iconTheme: IconThemeData(color: Colors.black),
-    toolbarTextStyle: TextStyle(
+    titleTextStyle: TextStyle(
+      fontSize: 14,
       color: secondaryColor,
-      fontSize: 18,
     ),
   );
 }
@@ -54,6 +55,9 @@ InputDecorationTheme inputDecorationTheme() {
   );
 
   return InputDecorationTheme(
+    floatingLabelBehavior: Platform.isIOS
+        ? FloatingLabelBehavior.always
+        : FloatingLabelBehavior.auto,
     enabledBorder: outlineInputBorder,
     focusedBorder: outlineInputBorder,
     errorBorder: outlineErrorInputBorder,

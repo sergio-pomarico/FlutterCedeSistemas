@@ -8,6 +8,7 @@ import 'package:fluttergram/locator.dart';
 import 'package:fluttergram/ui_shared/constanst.dart';
 import 'package:fluttergram/ui_shared/size_config.dart';
 import 'package:fluttergram/widgets/bottom_navbar.dart';
+import 'package:fluttergram/widgets/profile_item.dart';
 
 part './timeline_view.dart';
 part './profile_view.dart';
