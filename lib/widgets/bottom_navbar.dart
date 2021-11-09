@@ -14,7 +14,7 @@ class BottomNavbar extends StatelessWidget {
   final NavigatorService navigator = locator<NavigatorService>();
 
   void navigateTo(String route) {
-    navigator.push(route: route, key: navigator.homeNavigatorKey);
+    navigator.replace(route: route, key: navigator.homeNavigatorKey);
   }
 
   @override
@@ -49,17 +49,20 @@ class BottomNavbar extends StatelessWidget {
                   width: getProportionsScreenWidth(32),
                   color: currentPage == MenuPage.home
                       ? primaryColor
-                      : disablePrimaryColor,
+                      : secondaryColor,
                 ),
               ),
               IconButton(
                 onPressed: () {
                   //navigateTo(TimelineView.route);
                 },
-                icon: ImageFactory.fromAssets(
-                  asset: 'assets/icons/heart.svg',
+                icon: ImageFactory.svg(
+                  'assets/icons/heart.svg',
                   height: getProportionsScreenHeigth(32),
                   width: getProportionsScreenWidth(32),
+                  color: currentPage == MenuPage.favourites
+                      ? primaryColor
+                      : secondaryColor,
                 ),
               ),
               InkWell(
@@ -83,10 +86,13 @@ class BottomNavbar extends StatelessWidget {
                 onPressed: () {
                   //navigateTo(ProfileView.route);
                 },
-                icon: ImageFactory.fromAssets(
-                  asset: 'assets/icons/chat.svg',
+                icon: ImageFactory.svg(
+                  'assets/icons/chat.svg',
                   height: getProportionsScreenHeigth(32),
                   width: getProportionsScreenWidth(32),
+                  color: currentPage == MenuPage.messages
+                      ? primaryColor
+                      : secondaryColor,
                 ),
               ),
               IconButton(
@@ -99,7 +105,7 @@ class BottomNavbar extends StatelessWidget {
                   width: getProportionsScreenWidth(32),
                   color: currentPage == MenuPage.profile
                       ? primaryColor
-                      : disablePrimaryColor,
+                      : secondaryColor,
                 ),
               ),
             ],

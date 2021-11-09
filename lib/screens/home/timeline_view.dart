@@ -19,7 +19,14 @@ class TimelineView extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
-            children: <Widget>[Center(child: Text('Timeline'))],
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Center(
+                child: Text('No publications available'),
+              ),
+            ],
           ),
         ),
       ),
