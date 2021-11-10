@@ -1,20 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:fluttergram/bloc/feed/feed_bloc.dart';
 import 'package:fluttergram/ui_shared/constanst.dart';
 import 'package:fluttergram/ui_shared/size_config.dart';
 
-class Post extends StatelessWidget {
-  Post(
-      {required this.author,
-      required this.content,
-      required this.postURL,
-      required this.profileURL,
-      key})
-      : super(key: key);
+class PostCard extends StatelessWidget {
+  PostCard({required this.post, Key? key}) : super(key: key);
 
-  final String author;
-  final String profileURL;
-  final String postURL;
-  final String content;
+  final Post post;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +38,7 @@ class Post extends StatelessWidget {
                             shape: BoxShape.circle,
                             image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: NetworkImage(profileURL),
+                              image: NetworkImage(post.photo ?? ''),
                             ),
                           ),
                         ),
@@ -55,7 +47,7 @@ class Post extends StatelessWidget {
                         width: 20,
                       ),
                       Text(
-                        author,
+                        post.author ?? '',
                         style: TextStyle(color: textColor, fontSize: 18),
                       )
                     ],
@@ -70,7 +62,7 @@ class Post extends StatelessWidget {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: NetworkImage(postURL),
+                          image: NetworkImage(post.photo ?? ''),
                         ),
                       ),
                     ),
@@ -79,7 +71,7 @@ class Post extends StatelessWidget {
                     height: getProportionsScreenHeigth(20),
                   ),
                   Text(
-                    content,
+                    post.content ?? '',
                     style: TextStyle(color: textColor, fontSize: 16),
                   )
                 ],

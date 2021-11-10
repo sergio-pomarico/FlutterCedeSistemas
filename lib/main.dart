@@ -29,6 +29,7 @@ class AppState extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthBLoC>(create: (_) => AuthBLoC()),
+        BlocProvider<FeedBLoC>(create: (_) => FeedBLoC()),
       ],
       child: MyApp(),
     );
