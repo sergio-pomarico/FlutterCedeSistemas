@@ -186,7 +186,6 @@ class _LoginViewState extends State<LoginView> {
               ),
               BlocBuilder<AuthBLoC, AuthState>(
                   builder: (BuildContext context, AuthState state) {
-                print('error from view ${state.error}');
                 return state.error == null
                     ? SizedBox()
                     : Text(

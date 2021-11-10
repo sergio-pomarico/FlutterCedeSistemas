@@ -1,16 +1,21 @@
 library app.home;
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttergram/bloc/bloc.dart';
 import 'package:fluttergram/helpers/navigator.dart';
 import 'package:fluttergram/locator.dart';
+import 'package:fluttergram/repository/storage_repository.dart';
 import 'package:fluttergram/ui_shared/constanst.dart';
 import 'package:fluttergram/ui_shared/size_config.dart';
 import 'package:fluttergram/widgets/bottom_navbar.dart';
+import 'package:fluttergram/widgets/button.dart';
 import 'package:fluttergram/widgets/input.dart';
 import 'package:fluttergram/widgets/post.dart';
 import 'package:fluttergram/widgets/profile_item.dart';
+import 'package:image_picker/image_picker.dart';
 
 part './timeline_view.dart';
 part './profile_view.dart';

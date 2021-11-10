@@ -7,8 +7,12 @@ class CreatePostView extends StatefulWidget {
 }
 
 class _CreatePostViewState extends State<CreatePostView> {
+  final StorageRepository storage = locator<StorageRepository>();
   TextEditingController content = TextEditingController();
   String? contentError;
+  XFile? image;
+
+  final ImagePicker picker = ImagePicker();
 
   void validateContent(String _) {
     setState(() {
@@ -16,9 +20,21 @@ class _CreatePostViewState extends State<CreatePostView> {
     });
   }
 
-  void launchCamera() async {}
+  void launchCamera(BuildContext context) async {
+    image = await picker.pickImage(source: ImageSource.camera);
+    Navigator.pop(context);
+    setState(() {});
+  }
 
-  void launchGallery() async {}
+  void launchGallery(BuildContext context) async {
+    image = await picker.pickImage(source: ImageSource.gallery);
+    Navigator.pop(context);
+    setState(() {});
+  }
+
+  Future<void> createPost() async {
+    await storage.uploadFile(path: 'post', filePath: image?.path ?? '');
+  }
 
   void onPressLoadPhoto(BuildContext context) {
     showModalBottomSheet(
@@ -46,7 +62,7 @@ class _CreatePostViewState extends State<CreatePostView> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 TextButton(
-                  onPressed: launchCamera,
+                  onPressed: () => launchCamera(context),
                   child: Row(
                     children: [
                       Icon(
@@ -64,7 +80,7 @@ class _CreatePostViewState extends State<CreatePostView> {
                   ),
                 ),
                 TextButton(
-                  onPressed: launchGallery,
+                  onPressed: () => launchGallery(context),
                   child: Row(
                     children: [
                       Icon(
@@ -116,16 +132,25 @@ class _CreatePostViewState extends State<CreatePostView> {
                 child: SizedBox(
                   height: 320,
                   width: SizeConfig.screenWidth,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: lightGrey,
-                    ),
-                    child: Icon(
-                      Icons.photo_rounded,
-                      color: textColor,
-                      size: 48,
-                    ),
-                  ),
+                  child: image != null
+                      ? DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: lightGrey,
+                          ),
+                          child: Image.file(
+                            File(image?.path ?? ''),
+                          ),
+                        )
+                      : DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: lightGrey,
+                          ),
+                          child: Icon(
+                            Icons.photo_rounded,
+                            color: textColor,
+                            size: 48,
+                          ),
+                        ),
                 ),
               ),
               SizedBox(height: SizeConfig.screenHeight! * 0.05),
@@ -136,7 +161,11 @@ class _CreatePostViewState extends State<CreatePostView> {
                 placeholder: 'what are you thinking ?',
                 onChange: validateContent,
                 error: contentError,
-              )
+              ),
+              SizedBox(
+                height: 32,
+              ),
+              Button(label: 'Publish', onPress: createPost),
             ],
           ),
         ),
