@@ -33,7 +33,13 @@ class _CreatePostViewState extends State<CreatePostView> {
   }
 
   Future<void> createPost() async {
-    await storage.uploadFile(path: 'post', filePath: image?.path ?? '');
+    String path = generateUploadPath(image?.name ?? '');
+    await storage.uploadFile(path: path, filePath: image?.path ?? '');
+    String? url = await storage.getDownloadURL(file: path);
+  }
+
+  String generateUploadPath(String name) {
+    return 'posts/$name';
   }
 
   void onPressLoadPhoto(BuildContext context) {

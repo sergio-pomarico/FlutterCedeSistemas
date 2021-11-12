@@ -81,8 +81,6 @@ class _InputState extends State<Input> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return TextFormField(
-      // TODO: Input formaters agregar logica
-      //inputFormatters: [],
       keyboardType: widget.keyboardType,
       focusNode: focusNode,
       controller: widget.controller,

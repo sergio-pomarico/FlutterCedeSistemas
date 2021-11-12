@@ -13,69 +13,66 @@ class PostCard extends StatelessWidget {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) => SizedBox(
         width: constraints.maxWidth,
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              color: Colors.white,
-            ),
-            child: Padding(
-              padding: EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      SizedBox(
-                        width: getProportionsScreenWidth(48),
-                        height: getProportionsScreenHeigth(48),
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(post.photo ?? ''),
-                            ),
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            color: Colors.white,
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    SizedBox(
+                      width: getProportionsScreenWidth(48),
+                      height: getProportionsScreenHeigth(48),
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: NetworkImage(post.photo ?? ''),
                           ),
                         ),
                       ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
-                        post.author ?? '',
-                        style: TextStyle(color: textColor, fontSize: 18),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: getProportionsScreenHeigth(20),
-                  ),
-                  SizedBox(
-                    width: constraints.maxWidth,
-                    height: getProportionsScreenHeigth(240),
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: NetworkImage(post.photo ?? ''),
-                        ),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Text(
+                      post.author ?? '',
+                      style: TextStyle(color: textColor, fontSize: 18),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: getProportionsScreenHeigth(20),
+                ),
+                SizedBox(
+                  width: constraints.maxWidth,
+                  height: getProportionsScreenHeigth(240),
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: NetworkImage(post.photo ?? ''),
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: getProportionsScreenHeigth(20),
-                  ),
-                  Text(
-                    post.content ?? '',
-                    style: TextStyle(color: textColor, fontSize: 16),
-                  )
-                ],
-              ),
+                ),
+                SizedBox(
+                  height: getProportionsScreenHeigth(20),
+                ),
+                Text(
+                  post.content ?? '',
+                  style: TextStyle(color: textColor, fontSize: 16),
+                )
+              ],
             ),
           ),
         ),
