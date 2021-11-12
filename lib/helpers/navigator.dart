@@ -22,6 +22,13 @@ class NavigatorService {
     key.currentState?.pushReplacementNamed(route, arguments: params);
   }
 
+  void clearHistory({GlobalKey<NavigatorState>? key}) {
+    if (key == null) key = navigatorKey;
+    while (key.currentState?.canPop() ?? false) {
+      key.currentState?.pop();
+    }
+  }
+
   void goBack({required String route, GlobalKey<NavigatorState>? key}) {
     if (key == null) key = navigatorKey;
     key.currentState?.pop();

@@ -1,11 +1,11 @@
 part of 'feed_bloc.dart';
 
 class Post {
-  Post.fromJson(Map<String, dynamic> json) {
-    author = json['author'];
-    content = json['content'];
-    photo = json['photo'];
-    profileURL = json['profileURL'];
+  Post.fromJSON(Map<String, dynamic> json) {
+    author = json['author'] as String;
+    content = json['content'] as String;
+    photo = json['photo'] as String;
+    profileURL = json['profileURL'] as String;
   }
 
   String? author;
@@ -13,10 +13,14 @@ class Post {
   String? photo;
   String? profileURL;
 
-  Post({this.author, this.content, this.photo, this.profileURL});
+  Post(
+      {required this.author,
+      required this.content,
+      required this.photo,
+      required this.profileURL});
 }
 
 class FeedState {
-  final List<Post>? post;
-  FeedState({this.post});
+  List<Post>? posts;
+  FeedState({this.posts});
 }

@@ -7,9 +7,9 @@ class CreatePostView extends StatefulWidget {
 }
 
 class _CreatePostViewState extends State<CreatePostView> {
+  final StorageRepository storage = locator<StorageRepository>();
   TextEditingController content = TextEditingController();
   String? contentError;
-
   XFile? image;
 
   final ImagePicker picker = ImagePicker();
@@ -30,6 +30,16 @@ class _CreatePostViewState extends State<CreatePostView> {
     image = await picker.pickImage(source: ImageSource.gallery);
     Navigator.pop(context);
     setState(() {});
+  }
+
+  Future<void> createPost() async {
+    String path = generateUploadPath(image?.name ?? '');
+    await storage.uploadFile(path: path, filePath: image?.path ?? '');
+    String? url = await storage.getDownloadURL(file: path);
+  }
+
+  String generateUploadPath(String name) {
+    return 'posts/$name';
   }
 
   void onPressLoadPhoto(BuildContext context) {
@@ -76,7 +86,7 @@ class _CreatePostViewState extends State<CreatePostView> {
                   ),
                 ),
                 TextButton(
-                  onPressed: () => launchCamera(context),
+                  onPressed: () => launchGallery(context),
                   child: Row(
                     children: [
                       Icon(
@@ -126,11 +136,19 @@ class _CreatePostViewState extends State<CreatePostView> {
             children: <Widget>[
               InkWell(
                 onTap: () => onPressLoadPhoto(context),
-                child: image == null
-                    ? SizedBox(
-                        height: 320,
-                        width: SizeConfig.screenWidth,
-                        child: DecoratedBox(
+                child: SizedBox(
+                  height: 320,
+                  width: SizeConfig.screenWidth,
+                  child: image != null
+                      ? DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: lightGrey,
+                          ),
+                          child: Image.file(
+                            File(image?.path ?? ''),
+                          ),
+                        )
+                      : DecoratedBox(
                           decoration: BoxDecoration(
                             color: lightGrey,
                           ),
@@ -140,19 +158,7 @@ class _CreatePostViewState extends State<CreatePostView> {
                             size: 48,
                           ),
                         ),
-                      )
-                    : SizedBox(
-                        height: 320,
-                        width: SizeConfig.screenWidth,
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            color: lightGrey,
-                          ),
-                          child: Image.file(
-                            File(image?.path ?? ''),
-                          ),
-                        ),
-                      ),
+                ),
               ),
               SizedBox(height: SizeConfig.screenHeight! * 0.05),
               Input(
@@ -164,12 +170,9 @@ class _CreatePostViewState extends State<CreatePostView> {
                 error: contentError,
               ),
               SizedBox(
-                height: 16,
+                height: 32,
               ),
-              Button(
-                label: 'Publish',
-                onPress: () {},
-              ),
+              Button(label: 'Publish', onPress: createPost),
             ],
           ),
         ),

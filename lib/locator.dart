@@ -1,5 +1,6 @@
 import 'package:fluttergram/repository/auth_repository.dart';
-import 'package:fluttergram/repository/database.dart';
+import 'package:fluttergram/repository/database_repository.dart';
+import 'package:fluttergram/repository/storage_repository.dart';
 import 'package:get_it/get_it.dart';
 import 'helpers/navigator.dart';
 
@@ -9,5 +10,6 @@ void setupLocator() {
   locator
     ..registerLazySingleton(() => NavigatorService())
     ..registerLazySingleton(() => AuthRepository())
-    ..registerLazySingleton(() => DatabaseRepository());
+    ..registerLazySingleton(() => DataBaseRepository())
+    ..registerLazySingleton(() => StorageRepository());
 }
