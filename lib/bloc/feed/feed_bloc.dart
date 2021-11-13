@@ -7,6 +7,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttergram/helpers/navigator.dart';
 import 'package:fluttergram/locator.dart';
 import 'package:fluttergram/repository/database_repository.dart';
+import 'package:fluttergram/repository/storage_repository.dart';
+import 'package:fluttergram/screens/home/home_view.dart';
+import 'package:image_picker/image_picker.dart';
 
 part './feed_state.dart';
 part './feed_events.dart';
@@ -16,11 +19,14 @@ class FeedBLoC extends Bloc<FeedEvent, FeedState> {
 
   final DataBaseRepository repository = locator<DataBaseRepository>();
   final NavigatorService navigator = locator<NavigatorService>();
+  final StorageRepository storage = locator<StorageRepository>();
 
   @override
   Stream<FeedState> mapEventToState(FeedEvent event) async* {
     if (event is LoadPosts) {
       yield* _mapLoadPostToState();
+    } else if (event is CreatePost) {
+      yield* _mapCreatePostToState(image: event.image, content: event.content);
     }
   }
 
@@ -37,6 +43,25 @@ class FeedBLoC extends Bloc<FeedEvent, FeedState> {
           .toList();
 
       yield FeedState(posts: posts);
+    } catch (e) {
+      debugPrint('error to read post ${e.toString()}');
+    }
+  }
+
+  Stream<FeedState> _mapCreatePostToState(
+      {required String content, required XFile? image}) async* {
+    try {
+      String path = 'posts/${image?.name}';
+      await storage.uploadFile(path: path, filePath: image?.path ?? '');
+      String? url = await storage.getDownloadURL(file: path);
+      await repository.add(collection: 'posts', data: {
+        'author': 'Sergio', //TODO leer el nombre del usuario
+        'content': content,
+        'photo': url,
+        'profileURL': url,
+      });
+      navigator.replace(
+          route: TimelineView.route, key: navigator.homeNavigatorKey);
     } catch (e) {
       debugPrint('error to read post ${e.toString()}');
     }

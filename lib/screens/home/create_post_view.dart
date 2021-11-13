@@ -14,6 +14,8 @@ class _CreatePostViewState extends State<CreatePostView> {
 
   final ImagePicker picker = ImagePicker();
 
+  bool get canCreatePost => content.text.isEmpty || image == null;
+
   void validateContent(String _) {
     setState(() {
       contentError = content.text.isEmpty ? 'the content is required' : null;
@@ -30,16 +32,6 @@ class _CreatePostViewState extends State<CreatePostView> {
     image = await picker.pickImage(source: ImageSource.gallery);
     Navigator.pop(context);
     setState(() {});
-  }
-
-  Future<void> createPost() async {
-    String path = generateUploadPath(image?.name ?? '');
-    await storage.uploadFile(path: path, filePath: image?.path ?? '');
-    String? url = await storage.getDownloadURL(file: path);
-  }
-
-  String generateUploadPath(String name) {
-    return 'posts/$name';
   }
 
   void onPressLoadPhoto(BuildContext context) {
@@ -114,7 +106,7 @@ class _CreatePostViewState extends State<CreatePostView> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    print(image);
+    FeedBLoC feedBLoC = BlocProvider.of<FeedBLoC>(context);
     return Scaffold(
       key: Key('create_post_view'),
       appBar: AppBar(
@@ -172,7 +164,13 @@ class _CreatePostViewState extends State<CreatePostView> {
               SizedBox(
                 height: 32,
               ),
-              Button(label: 'Publish', onPress: createPost),
+              Button(
+                label: 'Publish',
+                onPress: () {
+                  feedBLoC.add(CreatePost(image: image, content: content.text));
+                },
+                disable: canCreatePost,
+              ),
             ],
           ),
         ),
